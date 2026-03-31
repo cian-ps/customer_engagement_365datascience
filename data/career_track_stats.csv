@@ -1,0 +1,16 @@
+action,track_id,n_students
+track enrollments,1,2999
+track enrollments,2,3915
+track enrollments,3,960
+course exam attempts,1,383
+course exam attempts,2,317
+course exam attempts,3,163
+course exam passed,1,344
+course exam passed,2,299
+course exam passed,3,148
+final exam attempts,1,24
+final exam attempts,2,33
+final exam attempts,3,17
+final exam passed,1,16
+final exam passed,2,15
+final exam passed,3,12
