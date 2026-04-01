@@ -160,7 +160,6 @@ def onboarding_plot(view: Literal["Daily", "Monthly"],
     elif view == "Monthly":
         fig = px.line(df, x="date_registered", y="monthly_onboard_rate",
                       title="Cumulative Onboard Rate per Month")
-        fig.update_layout(yaxis_range=[0.4, 0.7])
     return fig
 
 def exams_bar_plot(category: Literal["All", "Practice", "Course", "Career Track"]):
