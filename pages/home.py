@@ -1,12 +1,19 @@
-from dash import Dash, dcc, html, Input, Output
+from dash import dcc, Input, Output, register_page, callback
 import dash_bootstrap_components as dbc
 import numpy as np
 import pandas as pd
+import os
+import sys
+from pathlib import Path
+
+
+# import plotting functions
+base_dir = Path(os.path.dirname(os.path.realpath(__file__))).parent
+sys.path.append(str(base_dir))
 import plots
 
-
-# create app instance
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+# register page
+register_page(__name__, path="/")
 
 # set min/max dates
 df = pd.read_csv("data/engagement.csv")
@@ -14,9 +21,8 @@ df.engagement_date = pd.to_datetime(df.engagement_date)
 min_date = df.engagement_date.min()
 max_date = df.engagement_date.max()
 
-# define page layout
-app.layout = dbc.Container([
-    html.H1("Overview"),
+# define the layout
+layout = dbc.Container([
     dbc.Row([
         dbc.Col([
             dcc.Markdown("From"),
@@ -86,7 +92,7 @@ app.layout = dbc.Container([
 ])
 
 # define callbacks
-@app.callback(
+@callback(
         [Output("kpi_1", "figure"),
          Output("kpi_2", "figure"),
          Output("kpi_3", "figure")],
@@ -101,7 +107,7 @@ def update_kpis(date_start, date_end, stud_type):
     kpi3 = plots.certs_kpi(time_period, stud_type)
     return kpi1, kpi2, kpi3
 
-@app.callback(
+@callback(
         [Output("top_courses", "figure"),
          Output("donut_plot", "figure")],
         [Input("course_metric", "value"),
@@ -111,7 +117,3 @@ def update_graphs(metric, n):
     fig_courses = plots.courses_plot(metric, n)
     fig_ratings = plots.ratings_plot()
     return fig_courses, fig_ratings
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

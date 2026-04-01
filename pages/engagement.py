@@ -1,12 +1,19 @@
-from dash import Dash, dcc, html, Input, Output
+from dash import dcc, Input, Output, register_page, callback
 import dash_bootstrap_components as dbc
 import numpy as np
 import pandas as pd
+import os
+import sys
+from pathlib import Path
+
+
+# import plotting functions
+base_dir = Path(os.path.dirname(os.path.realpath(__file__))).parent
+sys.path.append(str(base_dir))
 import plots
 
-
-# create app instance
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+# register page
+register_page(__name__, path="/engagement")
 
 # set min/max dates
 df = pd.read_csv("data/engagement.csv")
@@ -15,8 +22,7 @@ min_date = df.engagement_date.min()
 max_date = df.engagement_date.max()
 
 # define the layout
-app.layout = dbc.Container([
-    html.H1("User Engagement"),
+layout = dbc.Container([
     dbc.Row([
         dbc.Col([
             dcc.Markdown("From"),
@@ -66,7 +72,7 @@ app.layout = dbc.Container([
 ])
 
 # define callbacks
-@app.callback(
+@callback(
         [Output("engagement_plot", "figure"),
          Output("onboarding_plot", "figure")],
         [Input("date_start", "date"),
@@ -79,7 +85,3 @@ def update_graphs(date_start, date_end, stud_type, view):
     fig_engage = plots.engagement_plot(view, stud_type, date_range)
     fig_onboard = plots.onboarding_plot(view, date_range)
     return fig_engage, fig_onboard
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

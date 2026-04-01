@@ -1,14 +1,20 @@
-from dash import Dash, dcc, html, Input, Output
+from dash import dcc, Input, Output, register_page, callback
 import dash_bootstrap_components as dbc
+import os
+import sys
+from pathlib import Path
+
+
+# import plotting functions
+base_dir = Path(os.path.dirname(os.path.realpath(__file__))).parent
+sys.path.append(str(base_dir))
 import plots
 
-
-# create app instance
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+# register page
+register_page(__name__, path="/exams")
 
 # define the layout
-app.layout = dbc.Container([
-    html.H1("Exams & Certificates"),
+layout = dbc.Container([
     dbc.Row([
         dbc.Col([
             dcc.Markdown("Exam Category"),
@@ -48,7 +54,7 @@ app.layout = dbc.Container([
 ])
 
 # define callbacks
-@app.callback(
+@callback(
         [Output("exams_plot", "figure"),
          Output("certs_plot", "figure"),
          Output("career_track_funnel", "figure")],
@@ -61,7 +67,3 @@ def update_graphs(exam_cat, cert_cat, track):
     bar_cert = plots.certs_bar_plot(cert_cat)
     funnel = plots.career_track_funnel(track)
     return bar_exam, bar_cert, funnel
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

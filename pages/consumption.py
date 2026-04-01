@@ -1,14 +1,20 @@
-from dash import Dash, dcc, html, Input, Output
+from dash import dcc, Input, Output, register_page, callback
 import dash_bootstrap_components as dbc
+import os
+import sys
+from pathlib import Path
+
+
+# import plotting functions
+base_dir = Path(os.path.dirname(os.path.realpath(__file__))).parent
+sys.path.append(str(base_dir))
 import plots
 
-
-# create app instance
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+# register page
+register_page(__name__, path="/consumption")
 
 # define the layout
-app.layout = dbc.Container([
-    html.H1("Content Consumption"),
+layout = dbc.Container([
     dbc.Row([
         dbc.Col([
             dcc.Markdown("Student Type"),
@@ -34,7 +40,7 @@ app.layout = dbc.Container([
 ])
 
 # define callbacks
-@app.callback(
+@callback(
         [Output("total_consumption", "figure"),
          Output("subscription_rate", "figure"),
          Output("subscription_duration", "figure")],
@@ -45,7 +51,3 @@ def update_graphs(stud_type):
     fig_f2p = plots.sub_rate_plot()
     fig_duration = plots.sub_duration_plot()
     return fig_consume, fig_f2p, fig_duration
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
