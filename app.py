@@ -4,6 +4,7 @@ import dash_bootstrap_components as dbc
 
 # create the app instance
 app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.LUX])
+server = app.server
 
 # create navbar
 navbar = dbc.NavbarSimple(
