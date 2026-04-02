@@ -19,12 +19,21 @@ navbar = dbc.NavbarSimple(
     dark=True
 )
 
+# create footer
+footer = dbc.Container([
+    dbc.Row([
+        html.A("View Source | Github",
+               href="https://github.com/cian-ps/customer_engagement_365datascience")
+    ])
+])
+
 # define the layout
 app.layout = html.Div([
     navbar,
-    page_container
+    page_container,
+    footer
 ])
 
 # run the app
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
