@@ -4,3 +4,4 @@ jupyter==1.1.1
 pandas==2.3.3
 pip==25.2
 plotly==6.6.0
+gunicorn==25.0.1
