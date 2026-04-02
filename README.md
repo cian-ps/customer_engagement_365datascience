@@ -6,23 +6,19 @@ This is my version of the dashboard created in the ["Customer Engagement Analysi
 
 Instead of using Tableau however, I used Python and [Plotly Dash](https://dash.plotly.com/) to build the dashboard.
 
-### Project Objectives
-
 The goal was to build an interactive dashboard that visualizes data-driven insight. With the course, a dataset containing information about [365datascience](https://365datascience.com) students and their interaction with the platform from January through October 2022 was provided.
 
-In August 2022 the platform was unlocked for free. In September 2022 a *"gamified"* version of the platform was released. It was expected to see an increase in student engagement during that time.
-
-**Key Questions**:
-1. Onboarding & Engagement after registration
-2. Difference between the behaviour of free plan students & paying students
-3. Correlation between content consumption and paid subscriptions
-4. Most popular courses on the platform.
+**Note**: In August 2022 the platform was unlocked for free for a short period of time. In September 2022 a *"gamified"* version of the platform was released. It was expected to see an increase in student engagement during that time.
 
 ---
 
 ## Data
 
 The data used for this project was provided from the course in the form of an sql file, that creates a database containing the relevant information.
+
+**Sample**:
+Students that registered on the platform between January 1, 2022 and October 31, 2022.
+Sample size: 37490
 
 ### DB Structure
 
